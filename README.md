@@ -157,7 +157,7 @@ Damit kannst du das System sofort testen.
 
 ### F10 reagiert nicht
 - Prüfe `ensure funk-system`.
-- Prüfe Server-Konsole auf Lua-Fehler.
+- Prüfe Server-Konsole auf Lua-Fehler.  
 
 ### Keine Einsätze sichtbar
 - Jobnamen in `Config.DispatchServices` prüfen.
@@ -177,7 +177,7 @@ Wenn dein PR-System Binärdateien blockiert, baue die ZIP lokal:
 zip -r funk-system.zip . -x '.git/*' 'funk-system.zip'
 ```
 
-Optional:
+Optional:d
 
 ```bash
 sha256sum funk-system.zip
