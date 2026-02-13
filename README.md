@@ -1,45 +1,39 @@
 # funk-system (FiveM)
 
-Dieses Resource ist ein Funk- und Leitstellensystem mit:
+Funk- und Leitstellensystem für FiveM mit:
 
 - Funkkanälen (`/funk join`, `/funk leave`, `/funk status`)
-- Bürger-Notruf (Polizei / Feuerwehr-Rettungsdienst)
-- Leitstellen-Funktionen (Einsätze sehen, Fahrzeuge besetzen/freigeben/alarmieren)
-- F10-Menü für schnelle Nutzung
+- Bürger-Notruf (Polizei oder Feuerwehr/Rettungsdienst)
+- Leitstelle (Einsätze sehen, Fahrzeuge besetzen/freigeben/alarmieren)
+- F10-Menü für schnelle Bedienung
 
 ---
 
-## 1) EXAKTE INSTALLATION (Schritt für Schritt)
+## 1) Installation (genau so)
 
-### Schritt 1: Resource-Ordner richtig ablegen
-
-Lege den **kompletten Ordner** `funk-system` in deinen FiveM-Resources-Pfad.
-
-Typische Pfade:
+### 1.1 Ordner platzieren
+Lege den kompletten Ordner `funk-system` in deinen Resources-Pfad:
 
 - `server-data/resources/funk-system`
 - oder `server-data/resources/[local]/funk-system`
 
-Wichtig ist nur: im Ordner müssen diese Dateien liegen:
+Im Ordner müssen diese Dateien vorhanden sein:
 
 - `fxmanifest.lua`
 - `config.lua`
 - `client/main.lua`
 - `server/main.lua`
 
-### Schritt 2: In `server.cfg` eintragen
-
-Öffne deine `server.cfg` und füge diese Zeile ein:
+### 1.2 `server.cfg` anpassen
+Füge in deiner `server.cfg` ein:
 
 ```cfg
 ensure funk-system
 ```
 
-Empfehlung: trage `ensure funk-system` **nach** Voice/Framework-Resources ein (z. B. nach `pma-voice`, ESX/QBCore), damit alles sicher geladen ist.
+Empfehlung: `ensure funk-system` nach Voice/Framework-Resources laden (z. B. `pma-voice`, ESX, QBCore).
 
-### Schritt 3: Server neu starten
-
-- Komplett neustarten **oder** in der Server-Konsole:
+### 1.3 Server neu laden
 
 ```cfg
 refresh
@@ -48,29 +42,29 @@ ensure funk-system
 
 ---
 
-## 2) WAS DU IN `config.lua` ANPASSEN MUSST
+## 2) Wichtige Konfiguration (`config.lua`)
 
 Datei: `resources/.../funk-system/config.lua`
 
-### A) Framework / Standalone Verhalten
+### 2.1 Framework/Fallback
 
 ```lua
 Config.UseFrameworkJobs = true
 Config.AllowManualServiceFallback = true
 ```
 
-- `UseFrameworkJobs = true`: ESX/QBCore Jobs werden verwendet, falls vorhanden.
-- `AllowManualServiceFallback = true`: wenn kein Job erkannt wird, kannst du manuell Dienst setzen mit `/setdienst ...`.
+- `UseFrameworkJobs = true`: nutzt ESX/QBCore Jobs, wenn verfügbar.
+- `AllowManualServiceFallback = true`: erlaubt `/setdienst ...`, wenn kein Framework-Job erkannt wird.
 
-### B) Funk-Whitelist
+### 2.2 Funk-Whitelist
 
 ```lua
 Config.JobWhitelist = { 'police', 'ambulance', 'fire' }
 ```
 
-Diese Jobnamen müssen zu deinen echten Jobnamen auf dem Server passen.
+> Die Jobnamen müssen exakt zu deinem Server passen.
 
-### C) Leitstellen-Dienste
+### 2.3 Leitstellen-Dienste
 
 ```lua
 Config.DispatchServices = {
@@ -79,10 +73,10 @@ Config.DispatchServices = {
 }
 ```
 
-- `police` sieht nur Polizei-Einsätze
-- `fire_ems` ist die gemeinsame Leitstelle für Feuerwehr + Rettungsdienst
+- `police` sieht nur Polizei-Einsätze.
+- `fire_ems` ist gemeinsame Leitstelle für Feuerwehr + Rettungsdienst.
 
-### D) Fahrzeuge, die alarmierbar sind
+### 2.4 Alarmierbare Fahrzeuge
 
 ```lua
 Config.DispatchUnits = {
@@ -92,45 +86,41 @@ Config.DispatchUnits = {
 }
 ```
 
-Diese Liste pflegst du so, wie euer Serverteam die Einheiten benennt.
+Diese Einheiten pflegt euer Server-Team.
 
 ---
 
-## 3) NUTZUNG IM SPIEL
+## 3) Nutzung im Spiel
 
-## Bürger (ohne Job)
+### 3.1 Bürger (Notruf)
 
 - `F10` drücken
-- `1` wählen (Notruf)
+- `1` wählen
 - Ziel wählen:
   - `1` Polizei
   - `2` Feuerwehr/Rettungsdienst
 - Notruftext eingeben
 
-Alternativ:
+Alternativ per Befehl:
 
 - `/notruf police <text>`
 - `/notruf fire_ems <text>`
 
-## Einsatzkräfte
+### 3.2 Einsatzkräfte (Leitstelle)
 
-### Leitstelle öffnen
+Leitstelle öffnen:
 
-- `F10` drücken
-- `2` wählen
+- `F10` drücken und `2` wählen
+- oder `/leitstelle`
 
-oder
-
-- `/leitstelle`
-
-### Leitstellen-Aktionen
+Leitstellen-Aktionen:
 
 - `1` Einsätze/Fahrzeuge anzeigen
 - `2` Fahrzeug besetzen
 - `3` Fahrzeug freigeben
 - `4` Fahrzeug auf Einsatz alarmieren
 
-### Funk
+### 3.3 Funkbefehle
 
 - `/funk join <kanal>`
 - `/funk leave`
@@ -139,51 +129,48 @@ oder
 
 ---
 
-## 4) WENN DU KEIN ESX/QBCore VERWENDEST (oder Jobs nicht greifen)
+## 4) Ohne ESX/QBCore testen
 
-Nutze den manuellen Dienstbefehl:
+Wenn Jobs nicht greifen, nutze:
 
 - `/setdienst police`
 - `/setdienst fire_ems`
 - `/setdienst off`
 
-Damit kannst du sofort testen, auch ohne Framework-Job-Zuordnung.
+Damit kannst du das System sofort testen.
 
 ---
 
-## 5) SCHNELLER TESTPLAN
+## 5) Kurz-Testplan
 
-1. Resource installiert + `ensure funk-system`
+1. `ensure funk-system`
 2. Spieler A (Bürger): `F10 -> 1` Notruf an Polizei
-3. Spieler B (Polizei): `F10 -> 2 -> 1` und prüft, dass der Einsatz sichtbar ist
-4. Spieler C (Feuerwehr/RD): `F10 -> 2 -> 1` und prüft, dass **Polizei-Einsatz nicht sichtbar** ist
-5. Feuerwehr/RD-Notruf senden und umgekehrt prüfen
-6. In Leitstelle Fahrzeug besetzen (`2`) und auf Einsatz alarmieren (`4`)
+3. Spieler B (Polizei): `F10 -> 2 -> 1` → Einsatz sichtbar
+4. Spieler C (Feuerwehr/RD): `F10 -> 2 -> 1` → Polizei-Einsatz **nicht** sichtbar
+5. Feuerwehr/RD-Notruf senden und Sichtbarkeit gegenprüfen
+6. Leitstelle: Fahrzeug besetzen (`2`) und alarmieren (`4`)
 
 ---
 
-## 6) TROUBLESHOOTING
+## 6) Fehlerbehebung
 
-### F10 macht nichts
-
-- Prüfe, ob `ensure funk-system` wirklich aktiv ist.
+### F10 reagiert nicht
+- Prüfe `ensure funk-system`.
 - Prüfe Server-Konsole auf Lua-Fehler.
 
-### Ich sehe keine Einsätze
+### Keine Einsätze sichtbar
+- Jobnamen in `Config.DispatchServices` prüfen.
+- Ohne Framework: `/setdienst police` oder `/setdienst fire_ems` setzen.
 
-- Prüfe Jobnamen in `Config.DispatchServices`.
-- Falls ohne Framework: `/setdienst police` oder `/setdienst fire_ems` setzen.
+### Funkkanal nicht betretbar
+- `Config.JobWhitelist` und `Config.RestrictedChannels` prüfen.
+- Jobname muss exakt übereinstimmen.
 
-### Funkkanal kann nicht betreten werden
+---
 
-- Prüfe `Config.JobWhitelist` und `Config.RestrictedChannels`.
-- Jobname muss exakt passen.
+## 7) Lokales Packaging (ohne Binärdatei im Repo)
 
-## 7) LOCAL PACKAGING (ohne Binärdatei im Repo)
-
-Wenn dein PR-System Binärdateien blockiert, erstelle die ZIP **lokal** statt sie zu committen.
-
-Befehl im Projektordner:
+Wenn dein PR-System Binärdateien blockiert, baue die ZIP lokal:
 
 ```bash
 zip -r funk-system.zip . -x '.git/*' 'funk-system.zip'
@@ -195,5 +182,4 @@ Optional:
 sha256sum funk-system.zip
 ```
 
-Siehe auch `PACKAGE.md`.
-
+Zusatzinfos: `PACKAGE.md`
