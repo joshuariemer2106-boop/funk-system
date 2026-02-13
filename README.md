@@ -179,3 +179,21 @@ Damit kannst du sofort testen, auch ohne Framework-Job-Zuordnung.
 - Prüfe `Config.JobWhitelist` und `Config.RestrictedChannels`.
 - Jobname muss exakt passen.
 
+## 7) LOCAL PACKAGING (ohne Binärdatei im Repo)
+
+Wenn dein PR-System Binärdateien blockiert, erstelle die ZIP **lokal** statt sie zu committen.
+
+Befehl im Projektordner:
+
+```bash
+zip -r funk-system.zip . -x '.git/*' 'funk-system.zip'
+```
+
+Optional:
+
+```bash
+sha256sum funk-system.zip
+```
+
+Siehe auch `PACKAGE.md`.
+
